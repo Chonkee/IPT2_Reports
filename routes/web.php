@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\SOAController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -48,6 +49,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/soa/send/{account}', [SOAController::class, 'sendToAccount'])->name('soa.send');
     Route::post('/soa/batch', [SOAController::class, 'sendBatch'])->name('soa.batch');
     Route::post('/soa/send-all', [SOAController::class, 'sendAll'])->name('soa.send-all');
+
+    // Report routes
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/create', [ReportController::class, 'create'])->name('reports.create');
+    Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
+    Route::get('/reports/{report}', [ReportController::class, 'show'])->name('reports.show');
+    Route::get('/reports/{report}/download', [ReportController::class, 'downloadPDF'])->name('reports.download');
 });
 
 require __DIR__.'/auth.php';

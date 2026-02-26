@@ -27,6 +27,9 @@
                     <x-nav-link :href="route('soa.index')" :active="request()->routeIs('soa.*')">
                         {{ __('SOA') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.*')">
+                        {{ __('Reports') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -93,6 +96,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('soa.index')" :active="request()->routeIs('soa.*')">
                 {{ __('SOA') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.*')">
+                {{ __('Reports') }}
             </x-responsive-nav-link>
         </div>
 
