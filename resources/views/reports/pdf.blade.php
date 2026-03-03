@@ -26,8 +26,8 @@
                     <th>Date</th>
                     <th>Customer</th>
                     <th>Account</th>
-                    <th>Type</th>
-                    <th>Amount</th>
+                    <th>Payment</th>
+                    <th>Disbursement</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,13 +36,17 @@
                     <td>{{ $transaction->transaction_date->format('M d, Y H:i') }}</td>
                     <td>{{ $transaction->account->customer->name }}</td>
                     <td>{{ $transaction->account->account_number }}</td>
-                    <td>{{ ucfirst($transaction->type) }}</td>
-                    <td>{{ $transaction->type === 'disbursement' ? '' : '₱' . number_format($transaction->amount, 2) }}</td>
+                    <td>{{ $transaction->type === 'payment' ? 'P' . number_format($transaction->amount, 2) : '' }}</td>
+                    <td>{{ $transaction->type === 'disbursement' ? 'P' . number_format($transaction->amount, 2) : '' }}</td>
                 </tr>
                 @endforeach
                 <tr style="font-weight: bold;">
-                    <td colspan="4" style="text-align: right;">Total Payments</td>
-                    <td>₱{{ number_format($transactions->where('type', 'payment')->sum('amount'), 2) }}</td>
+                    <td colspan="3" style="text-align: right;">Total Payments</td>
+                    <td colspan="2" style="text-align: center">P{{ number_format($transactions->where('type', 'payment')->sum('amount'), 2) }}</td>
+                </tr>
+                <tr style="font-weight: bold;">
+                    <td colspan="3" style="text-align: right;">Total Disbursements</td>
+                    <td colspan="2" style="text-align: center">P{{ number_format($transactions->where('type', 'disbursement')->sum('amount'), 2) }}</td>
                 </tr>
             </tbody>
         </table>

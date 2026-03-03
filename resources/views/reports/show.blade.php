@@ -24,8 +24,8 @@
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Date</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Customer</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Account</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Type</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Amount</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Payment</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Disbursement</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -34,13 +34,14 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">{{ $transaction->transaction_date->format('M d, Y H:i') }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">{{ $transaction->account->customer->name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">{{ $transaction->account->account_number }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">{{ ucfirst($transaction->type) }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">{{ $transaction->type === 'disbursement' ? '' : '₱' . number_format($transaction->amount, 2) }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">{{ $transaction->type === 'payment' ? '₱' . number_format($transaction->amount, 2) : '' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">{{ $transaction->type === 'disbursement' ? '₱' . number_format($transaction->amount, 2) : '' }}</td>
                                     </tr>
                                     @endforeach
                                     <tr class="bg-gray-50 dark:bg-gray-700 font-semibold">
-                                        <td colspan="4" class="px-6 py-4 text-left text-sm text-gray-900 dark:text-gray-100">Total Payments</td>
+                                        <td colspan="3" class="px-6 py-4 text-right text-sm text-gray-900 dark:text-gray-100">Totals</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">₱{{ number_format($transactions->where('type', 'payment')->sum('amount'), 2) }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-red-900 dark:text-gray-100">₱{{ number_format($transactions->where('type', 'disbursement')->sum('amount'), 2) }}</td>
                                     </tr>
                                 </tbody>
                             </table>
